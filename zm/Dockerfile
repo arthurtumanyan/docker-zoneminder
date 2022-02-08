@@ -6,7 +6,12 @@ ENV EDITOR=/usr/bin/vim
 
 RUN apt-get -qy update && apt-get -qy full-upgrade && \
     apt-get -qy install apache2 mariadb-server php libapache2-mod-php php-mysql lsb-release gnupg2 dos2unix dnsutils \
-    curl wget software-properties-common apt-transport-https git net-tools tzdata inetutils-ping vim bc sudo
+    curl wget software-properties-common apt-transport-https git net-tools tzdata inetutils-ping vim bc sudo \
+    libcrypt-eksblowfish-perl libmodule-build-perl libyaml-perl libjson-perl make gcc build-essential libcrypt-mysql-perl python3-numpy
+
+RUN perl -MCPAN -e "install Net::WebSocket::Server"
+RUN perl -MCPAN -e "install LWP::Protocol::https"
+RUN perl -MCPAN -e "install Net::MQTT::Simple"
 
 RUN [ -f /etc/localtime ] && unlink /etc/localtime && ln -s /usr/share/zoneinfo/Asia/Yerevan /etc/localtime
 RUN echo "deb https://zmrepo.zoneminder.com/debian/release-1.36 "`lsb_release -c -s`"/" >> /etc/apt/sources.list.d/zoneminder.list
